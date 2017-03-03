@@ -3,7 +3,11 @@ var webpack = require('webpack');
 var production = process.env.NODE_ENV === 'production';//判断是不是生产环境， window下可以在cmd 通过set NODE_ENV=production/development来改变环境变量 是生产/开发环境
 var CleanPlugin = require('clean-webpack-plugin');//清除一个文件夹下的文件
 var ExtractPlugin = require('extract-text-webpack-plugin');//把css抽取到单独的文件
-var plugins = [new ExtractPlugin('bundle.css'),
+var HtmlWebpackPlugin = require('html-webpack-plugin');//自动生成html文件
+
+var plugins = [
+    new HtmlWebpackPlugin(),
+    new ExtractPlugin('bundle.css'),
     new webpack.optimize.CommonsChunkPlugin({
         name: 'main',
         // Move dependencies to our main file
@@ -65,9 +69,9 @@ module.exports = {
         filename: production ? '[name]-[hash].js' : 'bundle.js',
         chunkFilename: '[name]-[chunkhash].js',
     },
-/*    devServer: {
-        hot: true,
-    },*/
+    /*    devServer: {
+     hot: true,
+     },*/
     module: {
         rules: [
             {
